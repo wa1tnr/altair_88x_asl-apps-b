@@ -1,0 +1,43 @@
+Essential files (see REPLACEMENTS below):
+
+_asl
+as.msg
+cmdarg.msg
+ioerrs.msg
+_p2bin
+p2bin.msg
+_p2hex
+p2hex.msg
+tools.msg
+
+Knowledge base:
+
+commands.txt
+mainfiles.txt
+_build.log
+
+Sample program:
+
+_this.asm
+_this.bin
+_this.hex
+_this.inc
+_this.lst
+_this.p
+
+Logfiles from sample program:
+
+_od-b-An_this.bin.log
+_od-b-An_this.p.log
+
+
+REPLACEMENTS
+
+Replace these with their counterparts from
+the full repository:
+
+ replace _asl    with  asl
+ replace _p2bin  with  p2bin
+ replace _p2hex  with  p2hex
+
+END.
