@@ -42,11 +42,20 @@ KEY:
 	OUT	001
 	LDA	BYAD
 	OUT	001
+	CALL	WAIT	; finite delay added here
+	RET
+
+WAIT:
+	MVI E,	000o
+	MVI D,	150o
+REENT:
+	DCR E
+	JNZ REENT
+	DCR D
+	JNZ REENT
+	RET
 
 ; spell it BYAA BYAB BYAB BYAC BYAB BYAD BYAD BYAD
-
-	JMP	START
-
 
 ; variables in higher low-memory
 
