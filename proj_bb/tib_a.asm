@@ -20,7 +20,14 @@ KEY:
 	LDA	BYTES
 	JMP	START
 
-; variables in high memory
+
+; variables in higher low-memory
+
+	ORG	1640o
+TIB:	DB	163o, 164o, 165o, 166o, 167o, 170o, 171o
+        DB	172o, 173o, 174o, 175o, 176o, 177o, 200o
+
+	ORG	1700o
 BYTES:	DB	105o, 162o, 162o, 157o, 162o, 040o, 040o, 040o ;  Error    ........
 
 ; variables in low memory
