@@ -1,0 +1,54 @@
+ AS V1.42 Beta [Bld 222] - Source File this.asm - Page 1 - 06/06/2022 02:26:14 PM
+
+
+       1/       0 :                     	ORG	0o
+       2/       0 : 072 040 000         START:	LDA	VAL1
+       3/       3 : 107                 	MOV	B,A
+       4/       4 : 072 041 000         	LDA	VAL2
+       5/       7 : 200                 	ADD	B
+       6/      10 : 062 042 000         	STA	SUM
+       7/      13 : 303 000 000         	JMP	START
+       8/      16 :                     
+       9/      40 :                     	ORG	40o
+      10/      40 : 025                 VAL1:	DB	25o
+      11/      41 : 310                 VAL2:	DB	310o
+      12/      42 : 000                 SUM:	DB	0o
+      13/      43 :                     
+      14/      43 :                     	END
+ AS V1.42 Beta [Bld 222] - Source File this.asm - Page 2 - 06/06/2022 02:26:14 PM
+
+
+  Symbol Table (* = unused):
+  --------------------------
+
+*ARCHITECTURE :                                      "x86_64-unknown-linux" - |
+*CASESENSITIVE :                  0 - | *COMPMODE :                       0 - |
+*CONSTPI :        3.141592653589793 - | *DATE :                "06/06/2022" - |
+*FALSE :                          0 - | *HAS64 :                          1 - |
+*LISTON :                         1 - | *MACEXP :                         7 - |
+*MOMCPU :                    100200 - | *MOMCPUNAME :                "8080" - |
+*NESTMAX :                      400 - | *RELAXED :                        0 - |
+ START :                          0 C |  SUM :                           42 C |
+*TIME :               "02:26:14 PM" - | *TRUE :                           1 - |
+ VAL1 :                          40 C |  VAL2 :                          41 C |
+*VERSION :                    12057 - | *Z80SYNTAX :                      0 - |
+
+     21 symbols
+     17 unused symbols
+
+ AS V1.42 Beta [Bld 222] - Source File this.asm - Page 3 - 06/06/2022 02:26:14 PM
+
+
+  Code Pages:
+  ----------
+
+STANDARD (0 changed characters)
+
+1 code page
+
+0.00 seconds assembly time
+
+     15 lines source file
+      2 passes
+      0 errors
+      0 warnings

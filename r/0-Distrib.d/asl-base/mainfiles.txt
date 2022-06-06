@@ -1,0 +1,33 @@
+Essential files:
+
+asl
+as.msg
+cmdarg.msg
+ioerrs.msg
+p2bin
+p2bin.msg
+p2hex
+p2hex.msg
+tools.msg
+
+Knowledge base:
+
+commands.txt
+mainfiles.txt
+build.log
+
+Sample program:
+
+this.asm
+this.bin
+this.hex
+this.inc
+this.lst
+this.p
+
+Logfiles from sample program:
+
+od-b-An_this.bin.log
+od-b-An_this.p.log
+
+END.
