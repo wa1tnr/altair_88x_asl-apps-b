@@ -1,5 +1,5 @@
 ; 'Error' program - early terminal input buffer (TIB)
-; Tue  7 Jun 00:03:05 UTC 2022
+; Tue  7 Jun 01:04:59 UTC 2022
 
 ; Start address: 2000
 
@@ -55,24 +55,22 @@ REENT:
 	JNZ REENT
 	RET
 
-BYTEZ:	DB	040o, 040o, 040o, 040o, 040o, 040o
-BKTEZ:	DB	124o, 165o, 145o, 040o, 040o, 067o, 040o, 112o
-BRTEZ:	DB	165o, 156o, 040o, 060o, 060o, 072o, 060o, 063o
-BJTEZ:	DB	072o, 062o, 060o, 040o, 125o, 124o, 103o, 040o
-BQTEZ:	DB	062o, 060o, 062o, 062o
+	DB	040o, 040o, 040o, 040o, 040o, 040o
+	DB	124o, 165o, 145o, 040o, 040o, 067o, 040o, 112o, 165o, 156o, 040o, 060o, 061o, 072o, 060o, 066o, 072o, 062o, 070o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
 
 ; odd.sh
 ; echo -n "${1}" | od -b -An
 
-; $ odd 'Tue  7 Jun 00:03:20 UTC 2022'
-; 124 165 145 040 040 067 040 112 165 156 040 060 060 072 060 063
-; 072 062 060 040 125 124 103 040 062 060 062 062
-
+; $  odd  'Tue  7 Jun 01:06:28 UTC 2022'
+; 124 165 145 040 040 067 040 112 165 156 040 060 061 072 060 066
+; 072 062 070 040 125 124 103 040 062 060 062 062
 
 ; variables in higher low-memory
 
 	ORG	1640o
 TIB:	DB	163o, 164o, 165o, 166o, 167o, 170o, 171o
+        DB	172o, 173o, 174o, 175o, 176o, 177o, 200o
+	DB	163o, 164o, 165o, 166o, 167o, 170o, 171o
         DB	172o, 173o, 174o, 175o, 176o, 177o, 200o
 
 ; BYTES:	DB	105o, 162o, 162o, 157o, 162o, 040o, 040o, 040o ;  Error    ........
