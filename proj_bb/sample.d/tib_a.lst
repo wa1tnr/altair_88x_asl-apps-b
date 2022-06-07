@@ -1,0 +1,145 @@
+ AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 1 - 06/07/2022 12:14:42 AM
+
+
+       1/       0 :                     ; 'Error' program - early terminal input buffer (TIB)
+       2/       0 :                     ; Tue  7 Jun 00:03:05 UTC 2022
+       3/       0 :                     
+       4/       0 :                     ; Start address: 2000
+       5/       0 :                     
+       6/    2000 :                     	ORG	2000o
+       7/    2000 :                     
+       8/    2000 : 061 000 374         START:	LXI SP,	SP_H
+       9/    2003 :                     
+      10/    2003 :                     LOOP:
+      11/    2003 : 315 011 004         	CALL	KEY
+      12/    2006 : 303 003 004         	JMP	LOOP
+      13/    2011 :                     
+      14/    2011 :                     KEY:
+      15/    2011 : 333 000             	IN	000
+      16/    2013 : 346 001             	ANI	001
+      17/    2015 : 302 011 004         	JNZ	KEY
+      18/    2020 : 333 001             	IN	001
+      19/    2022 : 323 001             	OUT	001
+      20/    2024 : 000                 	NOP
+      21/    2025 : 000                 	NOP
+      22/    2026 : 000                 	NOP
+      23/    2027 :                     	; LDA	BYTES
+      24/    2027 : 072 303 003         	LDA	BYAD	; 040o
+      25/    2032 : 323 001             	OUT	001
+      26/    2034 : 072 303 003         	LDA	BYAD
+      27/    2037 : 323 001             	OUT	001
+      28/    2041 : 072 303 003         	LDA	BYAD
+      29/    2044 : 323 001             	OUT	001
+      30/    2046 :                     
+      31/    2046 : 072 300 003         	LDA	BYAA	; 105o
+      32/    2051 : 323 001             	OUT	001
+      33/    2053 : 072 301 003         	LDA	BYAB    ; 162o
+      34/    2056 : 323 001             	OUT	001
+      35/    2060 : 072 301 003         	LDA	BYAB
+      36/    2063 : 323 001             	OUT	001
+      37/    2065 : 072 302 003         	LDA	BYAC	; 157o
+      38/    2070 : 323 001             	OUT	001
+      39/    2072 : 072 301 003         	LDA	BYAB
+      40/    2075 : 323 001             	OUT	001
+      41/    2077 : 072 303 003         	LDA	BYAD
+      42/    2102 : 323 001             	OUT	001
+      43/    2104 : 072 303 003         	LDA	BYAD
+      44/    2107 : 323 001             	OUT	001
+      45/    2111 : 315 115 004         	CALL	WAIT	; finite delay added here
+      46/    2114 : 311                 	RET
+      47/    2115 :                     
+      48/    2115 :                     WAIT:
+      49/    2115 : 036 000             	MVI E,	000o
+      50/    2117 : 026 150             	MVI D,	150o
+      51/    2121 :                     REENT:
+      52/    2121 : 035                 	DCR E
+      53/    2122 : 302 121 004         	JNZ REENT
+      54/    2125 : 025                 	DCR D
+      55/    2126 : 302 121 004         	JNZ REENT
+      56/    2131 : 311                 	RET
+      57/    2132 :                     
+      58/    2132 : 040 040 040 040     BYTEZ:	DB	040o, 040o, 040o, 040o, 040o, 040o
+             2136 : 040 040         
+      59/    2140 : 124 165 145 040     BKTEZ:	DB	124o, 165o, 145o, 040o, 040o, 067o, 040o, 112o
+ AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 2 - 06/07/2022 12:14:42 AM
+
+
+             2144 : 040 067 040 112 
+      60/    2150 : 165 156 040 060     BRTEZ:	DB	165o, 156o, 040o, 060o, 060o, 072o, 060o, 063o
+             2154 : 060 072 060 063 
+      61/    2160 : 072 062 060 040     BJTEZ:	DB	072o, 062o, 060o, 040o, 125o, 124o, 103o, 040o
+             2164 : 125 124 103 040 
+      62/    2170 : 062 060 062 062     BQTEZ:	DB	062o, 060o, 062o, 062o
+      63/    2174 :                     
+      64/    2174 :                     ; odd.sh
+      65/    2174 :                     ; echo -n "${1}" | od -b -An
+      66/    2174 :                     
+      67/    2174 :                     ; $ odd 'Tue  7 Jun 00:03:20 UTC 2022'
+      68/    2174 :                     ; 124 165 145 040 040 067 040 112 165 156 040 060 060 072 060 063
+      69/    2174 :                     ; 072 062 060 040 125 124 103 040 062 060 062 062
+      70/    2174 :                     
+      71/    2174 :                     
+      72/    2174 :                     ; variables in higher low-memory
+      73/    2174 :                     
+      74/    1640 :                     	ORG	1640o
+      75/    1640 : 163 164 165 166     TIB:	DB	163o, 164o, 165o, 166o, 167o, 170o, 171o
+             1644 : 167 170 171     
+      76/    1647 : 172 173 174 175             DB	172o, 173o, 174o, 175o, 176o, 177o, 200o
+             1653 : 176 177 200     
+      77/    1656 :                     
+      78/    1656 :                     ; BYTES:	DB	105o, 162o, 162o, 157o, 162o, 040o, 040o, 040o ;  Error    ........
+      79/    1656 :                     ; spell it BYAA BYAB BYAB BYAC BYAB BYAD BYAD BYAD
+      80/    1656 :                     
+      81/    1700 :                     	ORG	1700o
+      82/    1700 : 105                 BYAA:	DB	105o
+      83/    1701 : 162                 BYAB:	DB	162o
+      84/    1702 : 157                 BYAC:	DB	157o
+      85/    1703 : 040                 BYAD:	DB	040o
+      86/    1704 :                     
+      87/  176000 :                     	ORG	176000o
+      88/  176000 : 000                 SP_H:	DB	0o
+      89/  176001 :                     
+      90/  176001 :                     	END
+ AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 3 - 06/07/2022 12:14:42 AM
+
+
+  Symbol Table (* = unused):
+  --------------------------
+
+*ARCHITECTURE :                                      "x86_64-unknown-linux" - |
+*BJTEZ :                       2160 C | *BKTEZ :                       2140 C |
+*BQTEZ :                       2170 C | *BRTEZ :                       2150 C |
+ BYAA :                        1700 C |  BYAB :                        1701 C |
+ BYAC :                        1702 C |  BYAD :                        1703 C |
+*BYTEZ :                       2132 C | *CASESENSITIVE :                  0 - |
+*COMPMODE :                       0 - | *CONSTPI :        3.141592653589793 - |
+*DATE :                "06/07/2022" - | *FALSE :                          0 - |
+*HAS64 :                          1 - |  KEY :                         2011 C |
+*LISTON :                         1 - |  LOOP :                        2003 C |
+*MACEXP :                         7 - | *MOMCPU :                    100200 - |
+*MOMCPUNAME :                "8080" - | *NESTMAX :                      400 - |
+ REENT :                       2121 C | *RELAXED :                        0 - |
+ SP_H :                      176000 C | *START :                       2000 C |
+*TIB :                         1640 C | *TIME :               "12:14:42 AM" - |
+*TRUE :                           1 - | *VERSION :                    12057 - |
+ WAIT :                        2115 C | *Z80SYNTAX :                      0 - |
+
+     33 symbols
+     24 unused symbols
+
+ AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 4 - 06/07/2022 12:14:42 AM
+
+
+  Code Pages:
+  ----------
+
+STANDARD (0 changed characters)
+
+1 code page
+
+0.00 seconds assembly time
+
+     97 lines source file
+      2 passes
+      0 errors
+      0 warnings
