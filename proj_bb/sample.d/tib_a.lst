@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 1 - 06/07/2022 12:14:42 AM
+ AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 1 - 06/07/2022 12:33:40 AM
 
 
        1/       0 :                     ; 'Error' program - early terminal input buffer (TIB)
@@ -61,7 +61,7 @@
       58/    2132 : 040 040 040 040     BYTEZ:	DB	040o, 040o, 040o, 040o, 040o, 040o
              2136 : 040 040         
       59/    2140 : 124 165 145 040     BKTEZ:	DB	124o, 165o, 145o, 040o, 040o, 067o, 040o, 112o
- AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 2 - 06/07/2022 12:14:42 AM
+ AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 2 - 06/07/2022 12:33:40 AM
 
 
              2144 : 040 067 040 112 
@@ -100,7 +100,7 @@
       88/  176000 : 000                 SP_H:	DB	0o
       89/  176001 :                     
       90/  176001 :                     	END
- AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 3 - 06/07/2022 12:14:42 AM
+ AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 3 - 06/07/2022 12:33:40 AM
 
 
   Symbol Table (* = unused):
@@ -120,14 +120,14 @@
 *MOMCPUNAME :                "8080" - | *NESTMAX :                      400 - |
  REENT :                       2121 C | *RELAXED :                        0 - |
  SP_H :                      176000 C | *START :                       2000 C |
-*TIB :                         1640 C | *TIME :               "12:14:42 AM" - |
+*TIB :                         1640 C | *TIME :               "12:33:40 AM" - |
 *TRUE :                           1 - | *VERSION :                    12057 - |
  WAIT :                        2115 C | *Z80SYNTAX :                      0 - |
 
      33 symbols
      24 unused symbols
 
- AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 4 - 06/07/2022 12:14:42 AM
+ AS V1.42 Beta [Bld 222] - Source File tib_a.asm - Page 4 - 06/07/2022 12:33:40 AM
 
 
   Code Pages:
