@@ -1,5 +1,5 @@
 ; 'Error' program - early terminal input buffer (TIB)
-; Mon  6 Jun 23:57:59 UTC 2022
+; Tue  7 Jun 00:03:05 UTC 2022
 
 ; Start address: 2000
 
@@ -54,6 +54,20 @@ REENT:
 	DCR D
 	JNZ REENT
 	RET
+
+BYTEZ:	DB	040o, 040o, 040o, 040o, 040o, 040o
+BKTEZ:	DB	124o, 165o, 145o, 040o, 040o, 067o, 040o, 112o
+BRTEZ:	DB	165o, 156o, 040o, 060o, 060o, 072o, 060o, 063o
+BJTEZ:	DB	072o, 062o, 060o, 040o, 125o, 124o, 103o, 040o
+BQTEZ:	DB	062o, 060o, 062o, 062o
+
+; odd.sh
+; echo -n "${1}" | od -b -An
+
+; $ odd 'Tue  7 Jun 00:03:20 UTC 2022'
+; 124 165 145 040 040 067 040 112 165 156 040 060 060 072 060 063
+; 072 062 060 040 125 124 103 040 062 060 062 062
+
 
 ; variables in higher low-memory
 
