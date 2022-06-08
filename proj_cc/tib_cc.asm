@@ -1,5 +1,5 @@
 ; 'Error' program - early terminal input buffer (TIB)
-; Wed  8 Jun 13:57:21 UTC 2022
+; Wed  8 Jun 20:09:01 UTC 2022
 
 ; TESTED: 175010o EXAMINE, RUN hit the high trap
 
@@ -7,8 +7,40 @@ boundary:
 	ORG	1400o ; reserve 768 bytes
 	DB	1o
 
-; Start address: 2000
+; BYTES:	DB	105o, 162o, 162o, 157o, 162o, 040o, 040o, 040o ;  Error    ........
+; spell it BYAA BYAB BYAB BYAC BYAB BYAD BYAD BYAD
 
+; ###bookmark
+	ORG	1540o
+BYAA:	DB	105o
+BYAB:	DB	162o
+BYAC:	DB	157o
+BYAD:	DB	040o
+
+
+; variables in higher low-memory - stale comment
+
+	ORG	1640o
+
+TIB:
+	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
+	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
+
+	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
+	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
+
+	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
+	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
+
+	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
+	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
+
+	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
+	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
+
+
+
+; Start address: 2000
 	ORG	2000o
 START:	LXI SP,	SP_H
 	JMP run
@@ -76,35 +108,13 @@ REENT:
 ; odd.sh
 ; echo -n "${1}" | od -b -An
 
+; $  odd 'Wed  8 Jun 20:09:01 UTC 2022 immediately before 0.1.0-pre-alpha'
+
 	DB	040o, 040o, 040o, 040o, 040o, 040o
-
-;  git $  odd 'Wed  8 Jun 17:07:41 UTC 2022'
-	DB	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 061o, 067o, 072o, 060o, 067o
-	DB	072o, 064o, 061o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
-
-
-; old:
-;  git $  odd 'Wed  8 Jun 16:19:49 UTC 2022'
-	; DB	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 061o, 066o, 072o, 061o, 071o
-	; DB	072o, 064o, 071o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
-
-
-; variables in higher low-memory - stale comment
-
-	ORG	1640o
-TIB:	DB	163o, 164o, 165o, 166o, 167o, 170o, 171o
-        DB	172o, 173o, 174o, 175o, 176o, 177o, 200o
-	DB	163o, 164o, 165o, 166o, 167o, 170o, 171o
-        DB	172o, 173o, 174o, 175o, 176o, 177o, 200o
-
-; BYTES:	DB	105o, 162o, 162o, 157o, 162o, 040o, 040o, 040o ;  Error    ........
-; spell it BYAA BYAB BYAB BYAC BYAB BYAD BYAD BYAD
-
-	ORG	1700o
-BYAA:	DB	105o
-BYAB:	DB	162o
-BYAC:	DB	157o
-BYAD:	DB	040o
+	db	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 062o, 060o, 072o, 060o, 071o
+	db	072o, 060o, 061o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o, 040o, 151o, 155o, 155o
+	db	145o, 144o, 151o, 141o, 164o, 145o, 154o, 171o, 040o, 142o, 145o, 146o, 157o, 162o, 145o, 040o
+	db	060o, 056o, 061o, 056o, 060o, 055o, 160o, 162o, 145o, 055o, 141o, 154o, 160o, 150o, 141o
 
 	ORG	175000o
 ; SP_H:	DB	317o

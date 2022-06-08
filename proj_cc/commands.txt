@@ -1,0 +1,9 @@
+ ./asl -a -cpu 8080 -L -listradix 8 this.asm
+
+ od -b -An ./this.p
+
+ ./p2hex this.p
+
+ ./p2bin this.p
+
+END.
