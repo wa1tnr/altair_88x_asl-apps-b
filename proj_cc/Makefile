@@ -16,6 +16,9 @@ binfile:	$(THIS).p
 	@./p2bin -q $(THIS).p $(THIS).bin
 	@od -b -An $(THIS).bin > $(THIS).bin.dump
 
+edit:	$(THIS).asm
+	@rvim -n ./$(THIS).asm
+
 clean:
 	@rm -f $(THIS).inc
 	@rm -f $(THIS).lst
