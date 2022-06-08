@@ -1,6 +1,8 @@
 ; 'Error' program - early terminal input buffer (TIB)
 ; Wed  8 Jun 13:57:21 UTC 2022
 
+; TESTED: 175010o EXAMINE, RUN hit the high trap
+
 boundary:
 	ORG	1400o ; reserve 768 bytes
 	DB	1o
@@ -99,7 +101,8 @@ BYAC:	DB	157o
 BYAD:	DB	040o
 
 	ORG	175000o
-SP_H:	DB	317o
+; SP_H:	DB	317o
+SP_H:	DB	0o
 
 ; error trap
 	ORG	175400o ; act as soon as possible
