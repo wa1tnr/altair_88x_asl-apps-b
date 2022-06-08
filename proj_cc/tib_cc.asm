@@ -1,5 +1,5 @@
 ; 'Error' program - early terminal input buffer (TIB)
-; Tue  7 Jun 21:36:19 UTC 2022
+; Wed  8 Jun 13:57:21 UTC 2022
 
 boundary:
 	ORG	1400o ; reserve 768 bytes
@@ -10,11 +10,22 @@ boundary:
 	ORG	2000o
 
 START:	LXI SP,	SP_H
+	JMP run
+        NOP
+        NOP
+        NOP
+        NOP
+	LDA	017o
+        NOP
+        NOP
+        NOP
 
-LOOP:
+	; ORG	3300o
+run: ; THERE
+
+.loop
 	CALL	KEY
-	JMP	LOOP
-
+	JMP	.loop
 KEY:
 	IN	000
 	ANI	001
@@ -59,17 +70,19 @@ REENT:
 	JNZ REENT
 	RET
 
-	DB	040o, 040o, 040o, 040o, 040o, 040o
- 	DB	124o, 165o, 145o, 040o, 040o, 067o, 040o, 112o, 165o, 156o, 040o, 062o, 061o, 072o, 063o, 066o
-	DB	072o, 064o, 061o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
 
 ; odd.sh
 ; echo -n "${1}" | od -b -An
 
-;  $  odd 'Tue  7 Jun 21:36:41 UTC 2022'
-; 124o, 165o, 145o, 040o, 040o, 067o, 040o, 112o, 165o, 156o, 040o, 062o, 061o, 072o, 063o, 066o,
+;  $  odd 'Wed  8 Jun 14:28:40 UTC 2022'
+; 127 145 144 040 040 070 040 112 165 156 040 061 064 072 062 070
+; 072 064 060 040 125 124 103 040 062 060 062 062
 
-; variables in higher low-memory
+	DB	040o, 040o, 040o, 040o, 040o, 040o
+	DB	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 061o, 064o, 072o, 062o, 070o
+	DB	072o, 064o, 060o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
+
+; variables in higher low-memory - stale comment
 
 	ORG	1640o
 TIB:	DB	163o, 164o, 165o, 166o, 167o, 170o, 171o
@@ -95,4 +108,22 @@ SP_H:	DB	0o
 
 ;	ORG	176000o ; as front panel, could be 176,000 notation
 
+; -- map --
+
+boundaryxx:
+	ORG	1400o ; reserve 768 bytes
+
+TIBx:
+	ORG	1640o
+
+BYAAx: ; Error  string component bytes E r o and a space
+	ORG	1700o
+
+STARTx:
+	ORG	2000o
+runx:
+	ORG	3300o ; not yet implemented and is excessive
+
+SP_Hx:
+	ORG	176000o
 ; END.
