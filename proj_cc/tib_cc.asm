@@ -35,7 +35,7 @@ KEY:
 	NOP
 	NOP
 	NOP
-	JMP	trapped ; test
+	; JMP	trapped ; test
 
 	; LDA	BYTES
 	LDA	BYAD	; 040o
@@ -78,9 +78,15 @@ REENT:
 
 	DB	040o, 040o, 040o, 040o, 040o, 040o
 
+;  git $  odd 'Wed  8 Jun 17:07:41 UTC 2022'
+	DB	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 061o, 067o, 072o, 060o, 067o
+	DB	072o, 064o, 061o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
+
+
+; old:
 ;  git $  odd 'Wed  8 Jun 16:19:49 UTC 2022'
-	DB	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 061o, 066o, 072o, 061o, 071o
-	DB	072o, 064o, 071o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
+	; DB	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 061o, 066o, 072o, 061o, 071o
+	; DB	072o, 064o, 071o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
 
 
 ; variables in higher low-memory - stale comment
