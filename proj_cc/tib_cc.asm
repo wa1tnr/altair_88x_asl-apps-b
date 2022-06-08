@@ -1,6 +1,10 @@
 ; 'Error' program - early terminal input buffer (TIB)
 ; Tue  7 Jun 21:36:19 UTC 2022
 
+boundary:
+	ORG	1400o ; reserve 768 bytes
+	DB	1o
+
 ; Start address: 2000
 
 	ORG	2000o
