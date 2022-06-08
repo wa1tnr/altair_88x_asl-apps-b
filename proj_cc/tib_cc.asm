@@ -8,7 +8,6 @@ boundary:
 ; Start address: 2000
 
 	ORG	2000o
-
 START:	LXI SP,	SP_H
 	JMP run
         NOP
@@ -20,7 +19,6 @@ START:	LXI SP,	SP_H
         NOP
         NOP
 
-	; ORG	3300o
 run: ; THERE
 
 .loop
@@ -35,6 +33,8 @@ KEY:
 	NOP
 	NOP
 	NOP
+	JMP	trapped ; test
+
 	; LDA	BYTES
 	LDA	BYAD	; 040o
 	OUT	001
@@ -74,10 +74,12 @@ REENT:
 ; odd.sh
 ; echo -n "${1}" | od -b -An
 
-;  git $  odd 'Wed  8 Jun 15:18:45 UTC 2022'
 	DB	040o, 040o, 040o, 040o, 040o, 040o
-	DB	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 061o, 065o, 072o, 061o, 070o
-	DB	072o, 064o, 065o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
+
+;  git $  odd 'Wed  8 Jun 16:19:49 UTC 2022'
+	DB	127o, 145o, 144o, 040o, 040o, 070o, 040o, 112o, 165o, 156o, 040o, 061o, 066o, 072o, 061o, 071o
+	DB	072o, 064o, 071o, 040o, 125o, 124o, 103o, 040o, 062o, 060o, 062o, 062o
+
 
 ; variables in higher low-memory - stale comment
 
@@ -96,10 +98,169 @@ BYAB:	DB	162o
 BYAC:	DB	157o
 BYAD:	DB	040o
 
-	ORG	176000o
-SP_H:	DB	0o
+	ORG	175000o
+SP_H:	DB	317o
 
+; error trap
+	ORG	175400o ; act as soon as possible
+
+        NOP
+        NOP
+        NOP
+        NOP
+
+        NOP
+        NOP
+        NOP
+        NOP
+
+trapped:
+	JMP	err_hi
+
+waiting:
+	MVI E,	000o
+	MVI D,	150o
+reentry:
+	DCR E
+	JNZ reentry
+	DCR D
+	JNZ reentry
+	RET
+
+err_hi:
+	NOP
+	NOP
+hold:
+	NOP
+	NOP
+
+	LDA	BYHD	; 040o
+	OUT	001
+
+	LDA	BYHD
+	OUT	001
+
+	LDA	BYHA	; 105o 'E'
+	OUT	001
+
+	LDA	BYHB    ; 162o 'r'
+	OUT	001
+
+	LDA	BYHB
+	OUT	001
+
+	LDA	BYHC	; 157o 'o'
+	OUT	001
+
+	LDA	BYHB    ; 'Error' to here
+	OUT	001
+
+	LDA	BYHD
+	OUT	001
+
+
+	LDA	BYHE	; '-'
+	OUT	001
+
+	LDA	BYHD
+	OUT	001
+
+	LDA	BYHF	; 'H'
+	OUT	001
+
+	LDA	BYHG	; 'I'
+	OUT	001
+
+	LDA	BYHH	; 'G'
+	OUT	001
+
+	LDA	BYHF	; 'H'
+	OUT	001
+
+	LDA	BYHD    ; ' '
+	OUT	001
+
+	LDA	BYHI    ; 'T'
+	OUT	001
+
+	LDA	BYHJ    ; 'R'
+	OUT	001
+
+	LDA	BYHK    ; 'A'
+	OUT	001
+
+	LDA	BYHL    ; 'P'
+	OUT	001
+
+	LDA	BYHD    ; ' '
+	OUT	001
+
+	LDA	BYHD    ; ' '
+	OUT	001
+
+	NOP
+	NOP
+	NOP
+	NOP
+
+	CALL	waiting ; finite delay added here
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	CALL	waiting
+	JMP	hold
+	NOP
+	NOP
+	NOP
+	NOP
+
+BYHA:	DB	105o ; 'E'
+BYHB:	DB	162o ; 'r'
+BYHC:	DB	157o ; 'o'
+BYHD:	DB	040o ; ' '
+BYHE:	DB	055o ; '-'
+BYHF:	DB	110o ; 'H'
+BYHG:	DB	111o ; 'I'
+BYHH:	DB	107o ; 'G'
+BYHI:	DB	124o ; 'T'
+BYHJ:	DB	122o ; 'R'
+BYHK:	DB	101o ; 'A'
+BYHL:   DB	120o ; 'P'
 	END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; $  odd '  Error - HIGH TRAP  '
+; 040 040 105 162 162 157 162 040 055 040 110 111 107 110 040 124
+; 122 101 120 040 040
+
+
+
 
 ; NOTES - not in this program:
 
@@ -121,6 +282,8 @@ STARTx:
 runx:
 	ORG	3300o ; not yet implemented and is excessive
 
-SP_Hx:
+SP_Hx: ; stack pointer
 	ORG	176000o
+	DB	0o
+
 ; END.
