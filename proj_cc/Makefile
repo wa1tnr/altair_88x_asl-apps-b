@@ -16,6 +16,9 @@ binfile:	$(THIS).p
 	@./p2bin -q $(THIS).p $(THIS).bin
 	@od -b -An $(THIS).bin > $(THIS).bin.dump
 
+gdiff:	$(THIS).asm
+	@git diff ./$(THIS).asm
+
 edit:	$(THIS).asm
 	@rvim -n ./$(THIS).asm
 
