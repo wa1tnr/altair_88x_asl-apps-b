@@ -164,7 +164,7 @@
 ;		DISK INTERFACE
 ;		CONSOLE & PRINTER INTERFACE
 ;
-	PAGE
+;	PAGE
 ;
 ;----------------------------------------------------------
 ;
