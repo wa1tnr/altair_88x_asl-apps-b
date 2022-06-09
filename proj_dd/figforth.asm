@@ -4101,4 +4101,6 @@ MLIMIT	EQU	EM		;LAST MEMORY LOC USED + 1
 ; PASS 2
 ; > > > figforth.asm(3174):5: error: symbol undefined
 
+;	DW	ERZER-6 ; unknown - tnr bug found 23:18z  9 June 2022 ASL compile environment
+
 ; end_of_file.
