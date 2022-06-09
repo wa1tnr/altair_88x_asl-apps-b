@@ -1,0 +1,57 @@
+1,3d0
+< [[category:Embedded]]
+< <pre>
+<  
+168c165
+< 	PAGE
+---
+> ;	PAGE
+204c201
+< 	PAGE
+---
+> ;	PAGE
+253c250
+< 	PAGE
+---
+> ;	PAGE
+306c303
+< 	PAGE
+---
+> ;	PAGE
+355c352
+< 	PAGE
+---
+> ;	PAGE
+3008c3005
+< 	PAGE
+---
+> ;	PAGE
+3039c3036
+< 	PAGE
+---
+> ;	PAGE
+3175c3172
+< 	DW	ERZER-6
+---
+> ;	DW	ERZER-6 tnr kludge
+3319c3316
+< DW	MIN
+---
+> 	DW	MIN
+3446c3443
+< 	PAGE
+---
+> ;	PAGE
+3540c3537
+< 	PAGE
+---
+> ;	PAGE
+4047c4044
+< 	PAGE
+---
+> ;	PAGE
+4099,4102d4095
+< 
+< ; src:
+< ; https://tinymicros.com/mediawiki/index.php?title=FIG_Forth&action=edit
+< ; date: Thu  9 Jun 23:01:21 UTC 2022
