@@ -4099,3 +4099,7 @@ MLIMIT	EQU	EM		;LAST MEMORY LOC USED + 1
 ; src:
 ; https://tinymicros.com/mediawiki/index.php?title=FIG_Forth&action=edit
 ; date: Thu  9 Jun 23:01:21 UTC 2022
+
+; next bug: (23:17z)
+; PASS 2
+; > > > figforth.asm(3174):5: error: symbol undefined
