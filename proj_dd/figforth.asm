@@ -1,3 +1,5 @@
+; [[category:Embedded]]
+; <pre>
 	TITLE	'8080 FIG-FORTH 1.1 VERSION A0 17SEP79'
 ;
 ;	FIG-FORTH  RELEASE 1.1  FOR THE 8080 PROCESSOR
@@ -162,7 +164,7 @@
 ;		DISK INTERFACE
 ;		CONSOLE & PRINTER INTERFACE
 ;
-;	PAGE
+	PAGE
 ;
 ;----------------------------------------------------------
 ;
@@ -198,7 +200,7 @@ BUF1	EQU	EM-CO*NBUF	; ADDR FIRST DISK BUFFER
 INITR0	EQU	BUF1-US		; (R0)
 INITS0	EQU	INITR0-RTS	; (S0)
 ;
-;	PAGE
+	PAGE
 ;
 ;-------------------------------------------------------
 ;
@@ -247,7 +249,7 @@ ORIG	NOP
 ;					     | 1 OTHER DIFFER-
 ;					     ENCES EXIST }
 ;
-;	PAGE
+	PAGE
 ;
 ;------------------------------------------------------
 ;
@@ -300,7 +302,7 @@ RPP	DW	INITR0	; RETURN STACK POINTER
 ;	HW	=	HIGH WORD
 ;	( MAY BE USED AS SUFFIX TO ABOVE NAMES )
 ;
-;	PAGE
+	PAGE
 ;
 ;---------------------------------------------------
 ;	DEBUG SUPPORT
@@ -349,7 +351,7 @@ NEXT1:	MOV	E,M	;(PC) <- ((W))
 	XCHG
 	PCHL		; NOTE: (DE) = CFA+1
 ;
-;	PAGE
+	PAGE
 ;
 ;		FORTH DICTIONARY
 ;
@@ -3002,7 +3004,7 @@ MESS1	DW	PDOTQ
 	DB	'MSG # '
 	DW	DOT	; ENDIF
 MESS3	DW	SEMIS
-;	PAGE
+	PAGE
 ;------------------------------------------
 ;
 ;	8080 PORT FETCH AND STORE
@@ -3033,7 +3035,7 @@ PTSTO:	DW	$+2
 	MOV	A,L
 	OUT	0	;( PORT# MODIFIED )
 	JMP	NEXT
-;	PAGE
+	PAGE
 ;--------------------------------------------------
 ;	CP/M DISK INTERFACE
 ;
@@ -3169,7 +3171,7 @@ DRZER	DW	DOCOL,ZERO
 	DB	83H	; DR1
 	DB	'DR'
 	DB	'1'+80H
-;	DW	ERZER-6 tnr kludge
+	DW	ERZER-6
 DRONE	DW	DOCOL
 	DW	DENSTY,AT
 	DW	ZBRAN,DRON1-$
@@ -3313,7 +3315,7 @@ TSCALS	DW	LIT,SPDRV1
 	DW	SLMOD
 	DW	LIT,MXDRV
 
-	DW	MIN
+	DW	MIN ; tnr bugfix - DW first column in upstream 23:08z 9 Jun
 	DW	DUP,DRIVE
 	DW	AT,EQUAL
 	DW	ZBRAN,TSCAL3-$
@@ -3440,7 +3442,7 @@ ARROW	DW	DOCOL
 	DW	PSTOR
 	DW	SEMIS
 ;
-;	PAGE
+	PAGE
 ;-------------------------------------------------
 ;
 ;	CP/M CONSOLE & PRINTER INTERFACE
@@ -3534,7 +3536,7 @@ PCR	PUSH	B	; SAVE (IP)
 	JMP	NEXT
 ;
 ;----------------------------------------------------
-;	PAGE
+	PAGE
 ;
 	DB	0C1H	; '	( TICK )
 	DB	0A7H
@@ -4041,7 +4043,7 @@ TASK	DW	DOCOL
 ;
 INITDP:	DS	EM-$	;CONSUME MEMORY TO LIMIT
 ;
-;	PAGE
+	PAGE
 ;
 ;		MEMORY MAP
 ;	( THE FOLLOWING EQUATES ARE NOT REFERENCED ELSEWHERE )
@@ -4093,3 +4095,7 @@ MLIMIT	EQU	EM		;LAST MEMORY LOC USED + 1
 ;
 ;
 	END	ORIG
+
+; src:
+; https://tinymicros.com/mediawiki/index.php?title=FIG_Forth&action=edit
+; date: Thu  9 Jun 23:01:21 UTC 2022
