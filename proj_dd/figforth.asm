@@ -3169,7 +3169,7 @@ DRZER	DW	DOCOL,ZERO
 	DB	83H	; DR1
 	DB	'DR'
 	DB	'1'+80H
-	DW	ERZER-6 ; unknown - tnr bug found 23:18z  9 June 2022 ASL compile environment
+	DW	DRZER-6 ; unknown - tnr bug found 23:18z  9 June 2022 ASL compile environment
 DRONE	DW	DOCOL
 	DW	DENSTY,AT
 	DW	ZBRAN,DRON1-$
