@@ -200,7 +200,7 @@ BUF1	EQU	EM-CO*NBUF	; ADDR FIRST DISK BUFFER
 INITR0	EQU	BUF1-US		; (R0)
 INITS0	EQU	INITR0-RTS	; (S0)
 ;
-	PAGE
+;	PAGE
 ;
 ;-------------------------------------------------------
 ;
@@ -249,7 +249,7 @@ ORIG	NOP
 ;					     | 1 OTHER DIFFER-
 ;					     ENCES EXIST }
 ;
-	PAGE
+;	PAGE
 ;
 ;------------------------------------------------------
 ;
@@ -302,7 +302,7 @@ RPP	DW	INITR0	; RETURN STACK POINTER
 ;	HW	=	HIGH WORD
 ;	( MAY BE USED AS SUFFIX TO ABOVE NAMES )
 ;
-	PAGE
+;	PAGE
 ;
 ;---------------------------------------------------
 ;	DEBUG SUPPORT
@@ -351,7 +351,7 @@ NEXT1:	MOV	E,M	;(PC) <- ((W))
 	XCHG
 	PCHL		; NOTE: (DE) = CFA+1
 ;
-	PAGE
+;	PAGE
 ;
 ;		FORTH DICTIONARY
 ;
@@ -3004,7 +3004,7 @@ MESS1	DW	PDOTQ
 	DB	'MSG # '
 	DW	DOT	; ENDIF
 MESS3	DW	SEMIS
-	PAGE
+;	PAGE
 ;------------------------------------------
 ;
 ;	8080 PORT FETCH AND STORE
@@ -3035,7 +3035,7 @@ PTSTO:	DW	$+2
 	MOV	A,L
 	OUT	0	;( PORT# MODIFIED )
 	JMP	NEXT
-	PAGE
+;	PAGE
 ;--------------------------------------------------
 ;	CP/M DISK INTERFACE
 ;
@@ -3442,7 +3442,7 @@ ARROW	DW	DOCOL
 	DW	PSTOR
 	DW	SEMIS
 ;
-	PAGE
+;	PAGE
 ;-------------------------------------------------
 ;
 ;	CP/M CONSOLE & PRINTER INTERFACE
@@ -3536,7 +3536,7 @@ PCR	PUSH	B	; SAVE (IP)
 	JMP	NEXT
 ;
 ;----------------------------------------------------
-	PAGE
+;	PAGE
 ;
 	DB	0C1H	; '	( TICK )
 	DB	0A7H
@@ -4043,7 +4043,7 @@ TASK	DW	DOCOL
 ;
 INITDP:	DS	EM-$	;CONSUME MEMORY TO LIMIT
 ;
-	PAGE
+;	PAGE
 ;
 ;		MEMORY MAP
 ;	( THE FOLLOWING EQUATES ARE NOT REFERENCED ELSEWHERE )
