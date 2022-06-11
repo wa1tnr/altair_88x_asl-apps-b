@@ -1,0 +1,80 @@
+INSTALL
+
+(Makefile tour guide)
+
+# Sat 11 Jun 03:46:35 UTC 2022
+
+To Install, just do this:
+
+    make
+
+That's your install and build in one step, after
+cloning the repository (and a change directory to
+this current directory; the only one that has the
+new Makefile changes on 11 Jun 2022).
+
+
+If you type 'make' by itself it'll do the right thing,
+including copying the binaries from the distribution
+directory, to the current directory (replacing the
+short _underscore equivalents with the binaries).
+
+This is to reduce the size of this repository and
+seems to serve the purpose (of that goal).
+
+ - - -
+
+Other Makefile targets:
+
+all:	clean hexfile binfile
+
+That's what 'make' is doing (possibly) (not sure)
+
+$(THIS).p:	./asl $(THIS).asm
+
+Since the above target requires ./asl it is expected that the
+recipe to 'make' asl (copy it over) will be found and done,
+for you.
+
+hexfile:	$(THIS).p ./p2hex
+
+Just the .hex file is targeted, but has side-effects (the .asm has to be compiled into the .p file, first).
+Since it depends on the .p file and the ./p2hex binary, seems to 'complete the installation' just to make this target.  Nice side-effect.
+
+binfile:	$(THIS).p ./p2bin
+
+See the note about the hexfile - same ideas apply here.
+
+gdiff:	$(THIS).asm
+	@git diff ./$(THIS).asm
+
+Evokes 'git diff' on the main .asm file. Handy.
+
+edit:	$(THIS).asm
+	@rvim -n ./$(THIS).asm
+
+Evokes the rvim text editor on the main .asm file.  Replace with your own preferred code editor.
+
+env:
+	@rm -f _asl _p2bin _p2hex
+	@cp -p ../0-Distrib.d/asl-base/_asl ./asl
+	@cp -p ../0-Distrib.d/asl-base/_p2bin  ./p2bin
+	@cp -p ../0-Distrib.d/asl-base/_p2hex  ./p2hex
+
+The main copy-over routine to gain the working dev environment in the current directory.
+Can be a direct make target at the command line, most likely (untested since other hooks were added; should be fine).
+
+compiler:
+	@make env
+
+Subshell make process to copy over the environment.  Creates a resonable thing for 'make asl' to accomplish; first thought won, here - and it worked.
+
+asl:	compiler
+
+Requires the compiler target and in the process creates something that's required for some targets.  May be redundant.  Again, first thing that worked was accepted as a good solution.
+
+clean:
+
+Cleans up most of the build results (leaving the .asm behind, untouched).
+
+# END.
