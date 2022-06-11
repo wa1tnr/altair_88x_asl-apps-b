@@ -1,0 +1,18 @@
+Sat 11 Jun 03:13:07 UTC 2022
+
+ PC   = 0C82 = [78 B1 CA] = MOV A,B
+ SP   = 3AFE = [A0 0C 9B 10 9B 10 EC 10]
+ regA = 00 regS = 80 = S.......
+ regB = 01 regC = 8F regD = 3E regE = 71 regH = 00 regL = 00
+
+PC 0C82 is the return point of a loop near FILL iirc.
+
+The program runs for some time in this loop.
+
+Due to CP/M implementation, not testing much further;
+was an exercise mostly in compilation of a complete
+8080 assembler program of some complexity.
+
+Use as a reference for (much, much) simpler work to come. ;)
+
+END.
