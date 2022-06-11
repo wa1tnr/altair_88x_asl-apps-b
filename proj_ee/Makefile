@@ -43,6 +43,8 @@ env:
 compiler:
 	@make env
 
+asl:	compiler
+
 clean:
 	@rm -f $(THIS).inc
 	@rm -f $(THIS).lst
