@@ -1,0 +1,40 @@
+#!/bin/sh
+# Sat 18 Jun 11:20:30 UTC 2022
+
+export SHRED="_ee"
+
+for index in \
+  ../proj${SHRED}/_asl \
+  ../proj${SHRED}/_p2bin \
+  ../proj${SHRED}/_p2hex \
+  ../proj${SHRED}/_000-PATH_AS_MSGPATH \
+  ../proj${SHRED}/cf-altair8800.sh \
+  ../proj${SHRED}/commands.txt \
+  ../proj${SHRED}/detect_typeSCript.sh \
+  ../proj${SHRED}/INSTALL \
+  ../proj${SHRED}/mainfiles.txt \
+  ../proj${SHRED}/loaded.txt \
+  ../proj${SHRED}/Makefile \
+  ../proj${SHRED}/tib${SHRED}.asm
+  do
+    echo   "${index}"
+    ls -la "${index}"
+    git mv ${index} .
+  done
+exit 0
+
+for jindex in \
+  _asl \
+  _p2bin \
+  _p2hex
+  do
+    date > ./temp-date-x
+    echo   "${index}"
+    cat ./temp-date-x > "${jindex}"
+    rm ./temp-date-x
+  done
+
+exit 0
+
+# ../proj${SHRED}/loaded.txt # future commit
+# END.
