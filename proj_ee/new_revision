@@ -15,6 +15,7 @@ for index in \
   ../proj${SHRED}/mainfiles.txt \
   ../proj${SHRED}/loaded.txt \
   ../proj${SHRED}/Makefile \
+  ../proj${SHRED}/new_revision \
   ../proj${SHRED}/tib${SHRED}.asm
   do
     echo   "${index}"
