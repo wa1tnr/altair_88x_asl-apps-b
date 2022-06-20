@@ -16,39 +16,31 @@ BYAC:	DB	157o
 BYAD:	DB	040o
 
 
-; variables in higher low-memory - stale comment
-
 	ORG	1640o
 
+; $  odd 'Sun 19 Jun 20:58:06 UTC 2022 now displaying TIB contents on boot after CLRS! '
 TIB:
-	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
-	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
+; $  odd 'Sun 19 Jun 21:48:48 UTC'
 
-	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
-	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
+	db	123o, 165o, 156o, 040o,    061o, 071o, 040o, 112o
+	db	165o, 156o, 040o, 062o,    061o, 072o, 064o, 070o
+	db	072o, 064o, 070o, 040o,    125o, 124o, 103o, 040o
 
-	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
-	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
+	db	062o, 060o, 062o, 062o,    040o, 156o, 157o, 167o
+	db	040o, 144o, 151o, 163o,    160o, 154o, 141o, 171o
+	db	151o, 156o, 147o, 040o,    124o, 111o, 102o, 040o
+	db	143o, 157o, 156o, 164o,    145o, 156o, 164o, 163o
+	db	040o, 157o, 156o, 040o,    142o, 157o, 157o, 164o
+	db	040o, 141o, 146o, 164o,    145o, 162o, 040o, 103o
+	db	114o, 122o, 123o, 041o,    040o, 040o, 040o, 040o
 
-	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
-	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
-
-	DB	161o, 162o, 163o, 164o,   165o, 166o, 167o, 170o
-	DB	171o, 172o, 173o, 174o,   175o, 176o, 177o, 200o
-
-
-	ORG	4000o
-SP_H:	DB	0o
+; end of TIB
 
 
 ; Start address: 2000
 
 	ORG	2000o
-
-; CLD:	LXI SP,  000o
-
-; 0x0400
-CLD:	LXI SP,	176000o
+CLD:	LXI SP,	STACK+400Q
 
 ; 0x0403
 START:	JMP run
@@ -98,11 +90,6 @@ REENT:	DCR E
 ; 0x0420
 	RET
 
-; RET is placing PC to 000000o so that's a problem.
-
-; it's not reaching zero in the error - the instruction says
-; jump non-zero to cycle back, so it's just never hitting zero.
-
 ; 0x0421
 LDELY:	CALL	WAIT	; finite delay added here
 ; 0x0424
@@ -110,7 +97,6 @@ LDELY:	CALL	WAIT	; finite delay added here
 ; 0x0427
 	CALL	WAIT
 ; 0x042A
-; disregardxxx JMP	CANADA
 
 ; 0x042A
 	NOP	; KEEP all three NOP to preserve addresses in this document
@@ -218,14 +204,23 @@ CNVSN:	NOP
 
 ; 0x04CE
 run:	CALL	TRMSET
+
 ; 0x04D1
+	CALL	MESSG ; type up to 79 chars to the terminal, stored in TIB
+; 0x04D4
 	JMP	CNVSN
 
+; 0x04D7
+	NOP
+	NOP
+	NOP
+	NOP
+	NOP
+	NOP
+	NOP
+
+; 0x04DE
 	LDA	BYAD	; 040o
-	OUT	001
-	LDA	BYAD
-	OUT	001
-	LDA	BYAD
 	OUT	001
 	LDA	BYAA	; 105o
 	OUT	001
@@ -241,16 +236,263 @@ run:	CALL	TRMSET
 	OUT	001
 	LDA	BYAD
 	OUT	001
+; 0x0506
 	CALL	WAIT	; finite delay added here
 ; 0x0509
+	RET
+
+; 0x050A
+MDELY:	CALL	WAIT	; finite delay added here
+	CALL	WAIT
+	CALL	WAIT
+; 0x0513
+	RET
+
+; 0x0514
+MESSG:	CALL	MDELY
+	LDA	TIB
+	OUT	001
+
+	LDA	TIB+1
+	OUT	001
+
+	LDA	TIB+2
+	OUT	001
+
+	LDA	TIB+3
+	OUT	001
+
+	LDA	TIB+4
+	OUT	001
+
+	LDA	TIB+5
+	OUT	001
+
+	LDA	TIB+6
+	OUT	001
+
+	LDA	TIB+7
+	OUT	001
+
+	LDA	TIB+10o
+	OUT	001
+
+	LDA	TIB+11o
+	OUT	001
+
+	LDA	TIB+12o
+	OUT	001
+
+	LDA	TIB+13o
+	OUT	001
+
+	LDA	TIB+14o
+	OUT	001
+
+	LDA	TIB+15o
+	OUT	001
+
+	LDA	TIB+16o
+	OUT	001
+
+	LDA	TIB+17o
+	OUT	001
+
+	LDA	TIB+20o
+	OUT	001
+
+	LDA	TIB+21o
+	OUT	001
+
+	LDA	TIB+22o
+	OUT	001
+
+	LDA	TIB+23o
+	OUT	001
+
+	LDA	TIB+24o
+	OUT	001
+
+	LDA	TIB+25o
+	OUT	001
+
+	LDA	TIB+26o
+	OUT	001
+
+	LDA	TIB+27o
+	OUT	001
+
+	LDA	TIB+30o
+	OUT	001
+
+	LDA	TIB+31o
+	OUT	001
+
+	LDA	TIB+32o
+	OUT	001
+
+	LDA	TIB+33o
+	OUT	001
+
+	LDA	TIB+34o
+	OUT	001
+
+	LDA	TIB+35o
+	OUT	001
+
+	LDA	TIB+36o
+	OUT	001
+
+	LDA	TIB+37o
+	OUT	001
+
+	LDA	TIB+40o
+	OUT	001
+
+	LDA	TIB+41o
+	OUT	001
+
+	LDA	TIB+42o
+	OUT	001
+
+	LDA	TIB+43o
+	OUT	001
+
+	LDA	TIB+44o
+	OUT	001
+
+	LDA	TIB+45o
+	OUT	001
+
+	LDA	TIB+46o
+	OUT	001
+
+	LDA	TIB+47o
+	OUT	001
+
+	LDA	TIB+50o
+	OUT	001
+
+	LDA	TIB+51o
+	OUT	001
+
+	LDA	TIB+52o
+	OUT	001
+
+	LDA	TIB+53o
+	OUT	001
+
+	LDA	TIB+54o
+	OUT	001
+
+	LDA	TIB+55o
+	OUT	001
+
+	LDA	TIB+56o
+	OUT	001
+
+	LDA	TIB+57o
+	OUT	001
+
+	LDA	TIB+60o
+	OUT	001
+
+	LDA	TIB+61o
+	OUT	001
+
+	LDA	TIB+62o
+	OUT	001
+
+	LDA	TIB+63o
+	OUT	001
+
+	LDA	TIB+64o
+	OUT	001
+
+	LDA	TIB+65o
+	OUT	001
+
+	LDA	TIB+66o
+	OUT	001
+
+	LDA	TIB+67o
+	OUT	001
+
+	LDA	TIB+70o
+	OUT	001
+
+	LDA	TIB+71o
+	OUT	001
+
+	LDA	TIB+72o
+	OUT	001
+
+	LDA	TIB+73o
+	OUT	001
+
+	LDA	TIB+74o
+	OUT	001
+
+	LDA	TIB+75o
+	OUT	001
+
+	LDA	TIB+76o
+	OUT	001
+
+	LDA	TIB+77o
+	OUT	001
+
+	LDA	TIB+100o
+	OUT	001
+
+	LDA	TIB+101o
+	OUT	001
+
+	LDA	TIB+102o
+	OUT	001
+
+	LDA	TIB+103o
+	OUT	001
+
+	LDA	TIB+104o
+	OUT	001
+
+	LDA	TIB+105o
+	OUT	001
+
+	LDA	TIB+106o
+	OUT	001
+
+	LDA	TIB+107o
+	OUT	001
+
+	LDA	TIB+110o
+	OUT	001
+
+	LDA	TIB+111o
+	OUT	001
+
+	LDA	TIB+112o
+	OUT	001
+
+	LDA	TIB+113o
+	OUT	001
+
+	LDA	TIB+114o
+	OUT	001
+
+	LDA	TIB+115o
+	OUT	001
+
+	LDA	TIB+116o
+	OUT	001
+
 	RET
 
 ; odd.sh
 ; echo -n "${1}" | od -b -An
 
 	DB	040o, 040o, 040o, 040o, 040o, 040o
-; $ odd 'Sat 18 Jun 13:10:26 UTC 2022 after many edits and ROMming sessions and git HEAD stuff'
-; $ odd 'Sat 18 Jun 16:50:03 UTC 2022 found PC 000000Q bug so reorganized software quite a bit'
 ; $ odd 'Sat 18 Jun 19:03:23 UTC 2022 SP 0xFC00 aa'
 	DB	040o, 040o, 040o, 040o, 040o, 040o
 	db	123o, 141o, 164o, 040o, 061o, 070o, 040o, 112o
@@ -274,14 +516,9 @@ run:	CALL	TRMSET
 	db	144o, 162o, 145o, 163o, 163o, 145o, 163o, 040o
 	db	151o, 156o, 040o, 150o, 145o, 170o, 056o
 
-
 ; error trap
-	ORG	5000o ; act as soon as possible
 
-        NOP
-        NOP
-        NOP
-        NOP
+	ds	100o
 
 trapped:
 	JMP	err_hi
@@ -407,12 +644,16 @@ BYHI:	DB	124o ; 'T'
 BYHJ:	DB	122o ; 'R'
 BYHK:	DB	101o ; 'A'
 BYHL:   DB	120o ; 'P'
-	END
 
+
+; ------------------  stack  --------------
+	DS 40o
+STACK: 
+	DS 40o
+	END
 
 ; $  odd '  Error - HIGH TRAP  '
 ; 040 040 105 162 162 157 162 040 055 040 110 111 107 110 040 124
 ; 122 101 120 040 040
-
 
 ; END.
