@@ -1,22 +1,13 @@
-; 'Error' program - early terminal input buffer (TIB)
-; Sat 18 Jun 19:02:58 UTC 2022
+; early terminal input buffer (TIB)
+; Mon 20 Jun 19:28:32 UTC 2022
 
-; TESTED: 175010o EXAMINE, RUN hit the high trap
-;
+	ORG	2000o
+START:	JMP	CLD
 
-	ORG	100H	; 400o 256
-	JMP	CLD	; VECTOR TO COLD START
-
-	ORG	1540o
-; 0x0360
 BYAA:	DB	105o
 BYAB:	DB	162o
 BYAC:	DB	157o
-; 0x0363
 BYAD:	DB	040o
-
-
-	ORG	1640o
 
 ; $  odd 'Sun 19 Jun 20:58:06 UTC 2022 now displaying TIB contents on boot after CLRS! '
 TIB:
@@ -35,15 +26,12 @@ TIB:
 	db	114o, 122o, 123o, 041o,    040o, 040o, 040o, 040o
 
 ; end of TIB
-
+;	DS	40o
 
 ; Start address: 2000
 
-	ORG	2000o
-CLD:	LXI SP,	STACK+400Q
-
-; 0x0403
-START:	JMP run
+CLD:	LXI SP,	STACK+200Q
+	JMP run
 
 ; 0x0406
 ESCAPE  DB	27
@@ -492,15 +480,6 @@ MESSG:	CALL	MDELY
 ; odd.sh
 ; echo -n "${1}" | od -b -An
 
-	DB	040o, 040o, 040o, 040o, 040o, 040o
-; $ odd 'Sat 18 Jun 19:03:23 UTC 2022 SP 0xFC00 aa'
-	DB	040o, 040o, 040o, 040o, 040o, 040o
-	db	123o, 141o, 164o, 040o, 061o, 070o, 040o, 112o
-	db	165o, 156o, 040o, 061o, 071o, 072o, 060o, 063o
-	db	072o, 062o, 063o, 040o, 125o, 124o, 103o, 040o
-	db	062o, 060o, 062o, 062o, 040o, 123o, 120o, 040o
-	db	060o, 170o, 106o, 103o, 060o, 060o, 040o, 141o
-	db	141o
 
 	DB	040o, 040o, 040o, 040o, 040o, 040o
 ; $  odd 'Sat 18 Jun 20:56:22 UTC 2022 SOURCE is annotated with addresses in hex.'
@@ -515,6 +494,19 @@ MESSG:	CALL	MDELY
 	db	040o, 167o, 151o, 164o, 150o, 040o, 141o, 144o
 	db	144o, 162o, 145o, 163o, 163o, 145o, 163o, 040o
 	db	151o, 156o, 040o, 150o, 145o, 170o, 056o
+
+
+; proj_ff $  odd 'Mon 20 Jun 19:30:14 UTC 2022 simpler memory map'
+	DB	040o, 040o, 040o, 040o
+
+	db	115o, 157o, 156o, 040o,   062o, 060o, 040o, 112o
+	db	165o, 156o, 040o, 061o,   071o, 072o, 063o, 060o
+	db	072o, 061o, 064o, 040o,   125o, 124o, 103o, 040o
+	db	062o, 060o, 062o, 062o,   040o, 163o, 151o, 155o
+	db	160o, 154o, 145o, 162o,   040o, 155o, 145o, 155o
+	db	157o, 162o, 171o, 040o,   155o, 141o, 160o, 040o
+
+	DB	040o, 040o, 040o, 040o
 
 ; error trap
 
@@ -647,9 +639,8 @@ BYHL:   DB	120o ; 'P'
 
 
 ; ------------------  stack  --------------
-	DS 40o
+	; DS 40o
 STACK: 
-	DS 40o
 	END
 
 ; $  odd '  Error - HIGH TRAP  '
