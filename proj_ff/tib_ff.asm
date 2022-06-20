@@ -26,9 +26,6 @@ TIB:
 	db	114o, 122o, 123o, 041o,    040o, 040o, 040o, 040o
 
 ; end of TIB
-;	DS	40o
-
-; Start address: 2000
 
 CLD:	LXI SP,	STACK+200Q
 	JMP run
@@ -641,6 +638,7 @@ BYHL:   DB	120o ; 'P'
 ; ------------------  stack  --------------
 	; DS 40o
 STACK: 
+	DB	0
 	END
 
 ; $  odd '  Error - HIGH TRAP  '
