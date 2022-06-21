@@ -1,0 +1,434 @@
+ AS V1.42 Beta [Bld 222] - Source File tib_ff.asm - Page 1 - 06/21/2022 12:50:50 PM
+
+
+       1/       0 :                     ; keyboard echo w/boilerplate
+       2/       0 :                     
+       3/    2000 :                     	ORG	2000o
+       4/    2000 : 303 157 004         START:	JMP	CLD
+       5/    2003 :                     
+       6/    2003 :                     IDEN:
+       7/    2003 :                     ; $  odd ' jbncwkRR'
+       8/    2003 : 040 040 040 040     	db	040o, 040o, 040o, 040o,   040o, 155o, 162o, 142o
+             2007 : 040 155 162 142 
+       9/    2013 : 151 154 154 040     	db	151o, 154o, 154o, 040o,   153o, 040o, 040o, 040
+             2017 : 153 040 040 050 
+      10/    2023 :                     
+      11/    2023 : 105                 BYAA:	DB	105o
+      12/    2024 : 162                 BYAB:	DB	162o
+      13/    2025 : 157                 BYAC:	DB	157o
+      14/    2026 : 040                 BYAD:	DB	040o
+      15/    2027 :                     
+      16/    2027 :                     TIB:
+      17/    2027 :                     
+      18/    2027 :                     ; message
+      19/    2027 :                     
+      20/    2027 :                     ; $  odd 'Tue 21 Jun 12:26:53 UTC 2022 '
+      21/    2027 : 124 165 145 040     	db	124o, 165o, 145o, 040o,   062o, 061o, 040o, 112o
+             2033 : 062 061 040 112 
+      22/    2037 : 165 156 040 061     	db	165o, 156o, 040o, 061o,   062o, 072o, 062o, 066o
+             2043 : 062 072 062 066 
+      23/    2047 : 072 065 063 040     	db	072o, 065o, 063o, 040o,   125o, 124o, 103o, 040o
+             2053 : 125 124 103 040 
+      24/    2057 : 062 060 062 062     	db	062o, 060o, 062o, 062o,   040o
+             2063 : 040             
+      25/    2064 :                     
+      26/    2064 :                     ; $  odd 'r00-dd- '
+      27/    2064 : 162 060 060 055     	db	162o, 060o, 060o, 055o,   144o, 144o, 055o, 040o
+             2070 : 144 144 055 040 
+      28/    2074 :                     
+      29/    2074 :                     ; $  odd 'now displaying TIB contents on boot after CLRS! '
+      30/    2074 : 156 157 167         	db	156o, 157o, 167o
+      31/    2077 : 040 144 151 163     	db	040o, 144o, 151o, 163o,   160o, 154o, 141o, 171o
+             2103 : 160 154 141 171 
+      32/    2107 : 151 156 147 040     	db	151o, 156o, 147o, 040o,   124o, 111o, 102o, 040o
+             2113 : 124 111 102 040 
+      33/    2117 : 143 157 156 164     	db	143o, 157o, 156o, 164o,   145o, 156o, 164o, 163o
+             2123 : 145 156 164 163 
+      34/    2127 : 040 157 156 040     	db	040o, 157o, 156o, 040o,   142o, 157o, 157o, 164o
+             2133 : 142 157 157 164 
+      35/    2137 : 040 141 146 164     	db	040o, 141o, 146o, 164o,   145o, 162o, 040o, 103o
+             2143 : 145 162 040 103 
+      36/    2147 : 114 122 123 041     	db	114o, 122o, 123o, 041o,   040o, 040o, 040o, 040o
+             2153 : 040 040 040 040 
+      37/    2157 :                     
+      38/    2157 : 061 155 007         CLD:	LXI SP,	STACK+400Q ; 200Q was working previously
+      39/    2162 :                     ;	JMP trapped
+      40/    2162 :                     ;	JMP run
+      41/    2162 : 303 075 005         	JMP run
+      42/    2165 :                     
+      43/    2165 : 033                 ESCAPE  DB	27
+      44/    2166 : 133                 SQBKT	DB	133o
+      45/    2167 : 060                 NBR0	DB	060o
+      46/    2170 : 061                 NBR1	DB	061o
+      47/    2171 : 062                 NBR2	DB	062o
+ AS V1.42 Beta [Bld 222] - Source File tib_ff.asm - Page 2 - 06/21/2022 12:50:50 PM
+
+
+      48/    2172 : 063                 NBR3	DB	063o
+      49/    2173 : 064                 NBR4	DB	064o
+      50/    2174 : 065                 NBR5	DB	065o
+      51/    2175 : 066                 NBR6	DB	066o
+      52/    2176 : 067                 NBR7	DB	067o
+      53/    2177 :                     
+      54/    2177 : 070                 NBR8	DB	070o
+      55/    2200 : 071                 NBR9	DB	071o
+      56/    2201 : 101                 LTRA	DB	101o
+      57/    2202 : 112                 LTRJ	DB	112o
+      58/    2203 :                     
+      59/    2203 :                     ; delay
+      60/    2203 : 036 000             WAIT:	MVI E,	000o
+      61/    2205 : 026 150             	MVI D,	150o
+      62/    2207 : 035                 REENT:	DCR E
+      63/    2210 : 302 207 004         	JNZ REENT
+      64/    2213 : 025                 	DCR D
+      65/    2214 : 302 207 004         	JNZ REENT
+      66/    2217 : 311                 	RET
+      67/    2220 :                     
+      68/    2220 : 315 203 004         LDELY:	CALL	WAIT
+      69/    2223 : 315 203 004         	CALL	WAIT
+      70/    2226 : 315 203 004         	CALL	WAIT
+      71/    2231 : 000                 	NOP
+      72/    2232 : 000                 	NOP
+      73/    2233 : 000                 	NOP
+      74/    2234 : 315 203 004         	CALL	WAIT
+      75/    2237 : 315 203 004         	CALL	WAIT
+      76/    2242 : 315 203 004         	CALL	WAIT
+      77/    2245 : 315 203 004         	CALL	WAIT
+      78/    2250 : 315 203 004         	CALL	WAIT
+      79/    2253 : 315 203 004         	CALL	WAIT
+      80/    2256 : 315 203 004         	CALL	WAIT
+      81/    2261 : 315 203 004         	CALL	WAIT
+      82/    2264 : 315 203 004         	CALL	WAIT
+      83/    2267 :                     
+      84/    2267 : 315 203 004         	CALL	WAIT
+      85/    2272 : 315 203 004         	CALL	WAIT
+      86/    2275 : 315 203 004         	CALL	WAIT
+      87/    2300 : 315 203 004         	CALL	WAIT
+      88/    2303 : 315 203 004         	CALL	WAIT
+      89/    2306 : 315 203 004         	CALL	WAIT
+      90/    2311 : 315 203 004         	CALL	WAIT
+      91/    2314 : 315 203 004         	CALL	WAIT
+      92/    2317 : 315 203 004         	CALL	WAIT
+      93/    2322 :                     
+      94/    2322 : 315 203 004         	CALL	WAIT
+      95/    2325 : 315 203 004         	CALL	WAIT
+      96/    2330 : 315 203 004         	CALL	WAIT
+      97/    2333 : 315 203 004         	CALL	WAIT
+      98/    2336 : 315 203 004         	CALL	WAIT
+      99/    2341 : 315 203 004         	CALL	WAIT
+     100/    2344 : 315 203 004         	CALL	WAIT
+     101/    2347 : 315 203 004         	CALL	WAIT
+     102/    2352 : 315 203 004         	CALL	WAIT
+     103/    2355 : 315 203 004         	CALL	WAIT
+     104/    2360 : 311                 	RET
+     105/    2361 :                     
+     106/    2361 : 072 165 004         CLRS:	LDA	ESCAPE ; PC   = 0482 = [3A 06 04] = LDA 0406
+     107/    2364 : 323 001             	OUT	001
+ AS V1.42 Beta [Bld 222] - Source File tib_ff.asm - Page 3 - 06/21/2022 12:50:50 PM
+
+
+     108/    2366 : 072 166 004         	LDA	SQBKT
+     109/    2371 : 323 001             	OUT	001
+     110/    2373 : 072 171 004         	LDA	NBR2
+     111/    2376 : 323 001             	OUT	001
+     112/    2400 : 072 202 004         	LDA	LTRJ
+     113/    2403 : 323 001             	OUT	001
+     114/    2405 : 311                 	RET
+     115/    2406 :                     
+     116/    2406 : 072 165 004         CUUP:	LDA	ESCAPE ; ESC [ 1 3 A ESCAPE SQBKT NBR1 NBR5 LTRA
+     117/    2411 : 323 001             	OUT	001
+     118/    2413 :                     
+     119/    2413 : 072 166 004         	LDA	SQBKT
+     120/    2416 : 323 001             	OUT	001
+     121/    2420 :                     
+     122/    2420 : 072 171 004         	LDA	NBR2
+     123/    2423 : 323 001             	OUT	001
+     124/    2425 :                     
+     125/    2425 : 072 177 004         	LDA	NBR8
+     126/    2430 : 323 001             	OUT	001
+     127/    2432 :                     
+     128/    2432 : 072 201 004         	LDA	LTRA
+     129/    2435 : 323 001             	OUT	001
+     130/    2437 :                     
+     131/    2437 : 311                 	RET
+     132/    2440 :                     
+     133/    2440 :                     
+     134/    2440 : 315 220 004         TRMSET:	CALL	LDELY
+     135/    2443 : 315 361 004         	CALL	CLRS
+     136/    2446 : 315 006 005         	CALL	CUUP
+     137/    2451 :                     
+     138/    2451 : 311                 	RET
+     139/    2452 :                     
+     140/    2452 : 333 000             KEY:	IN	000
+     141/    2454 : 346 001             	ANI	001
+     142/    2456 : 302 052 005         	JNZ	KEY
+     143/    2461 :                     
+     144/    2461 : 333 001             FOUND:	IN	001
+     145/    2463 : 323 001             	OUT	001
+     146/    2465 :                     
+     147/    2465 : 311                 	RET
+     148/    2466 :                     
+     149/    2466 : 000                 CNVSN:	NOP
+     150/    2467 :                     
+     151/    2467 : 315 052 005         .loop	CALL	KEY
+     152/    2472 : 303 067 005         	JMP	.loop
+     153/    2475 :                     
+     154/    2475 :                     run:
+     155/    2475 :                     ;	CALL	TRMSET
+     156/    2475 : 315 040 005         	CALL	TRMSET
+     157/    2500 : 315 120 005         	CALL	MESSG ; type up to 79 chars to the terminal, stored in TIB
+     158/    2503 : 303 066 005         	JMP	CNVSN
+     159/    2506 :                     
+     160/    2506 : 315 203 004         MDELY:	CALL	WAIT	; finite delay added here
+     161/    2511 : 315 203 004         	CALL	WAIT
+     162/    2514 : 315 203 004         	CALL	WAIT
+     163/    2517 :                     
+     164/    2517 : 311                 	RET
+     165/    2520 :                     
+     166/    2520 :                     
+     167/    2520 : 315 106 005         MESSG:	CALL	MDELY
+ AS V1.42 Beta [Bld 222] - Source File tib_ff.asm - Page 4 - 06/21/2022 12:50:50 PM
+
+
+     168/    2523 :                     
+     169/    2523 :                     ; ###bookmark
+     170/    2523 :                     
+     171/    2523 :                     .push_regs:
+     172/    2523 : 305                 	PUSH B
+     173/    2524 : 325                 	PUSH D
+     174/    2525 : 345                 	PUSH H
+     175/    2526 :                     
+     176/    2526 :                     .string_addrs
+     177/    2526 : 041 027 004         	LXI H,	TIB ; address of string base
+     178/    2531 :                     
+     179/    2531 :                     .counter:
+     180/    2531 :                     	; string length is near 125o - manually determined
+     181/    2531 : 036 125             	MVI E,	125o ; lo  ; length of string to display
+     182/    2533 : 026 000             	MVI D,	000o ; hi
+     183/    2535 :                     
+     184/    2535 :                     ; type the string to the console
+     185/    2535 :                     .putch:
+     186/    2535 : 035                 	DCR E
+     187/    2536 : 176                 	MOV A, M ; copy the memory contents pointed to by HL into A
+     188/    2537 : 323 001             	OUT	001
+     189/    2541 : 043                 	INX	H
+     190/    2542 : 302 135 005         	JNZ .putch
+     191/    2545 :                     
+     192/    2545 :                     .pop_regs:
+     193/    2545 : 341                         POP	H
+     194/    2546 : 321                         POP	D
+     195/    2547 : 301                         POP	B
+     196/    2550 :                     
+     197/    2550 :                     .end_MESSG:
+     198/    2550 : 311                 	RET
+     199/    2551 :                     
+     200/    2551 :                     
+     201/    2551 :                     ; ---------   error trap   ----------
+     202/    2551 :                     ; nothing calls this; it's meant for situations where
+     203/    2551 :                     ; NOP was followed past a boundary, to notify operator
+     204/    2551 :                     ; that an invalid execution path has begun.
+     205/    2551 :                     
+     206/    2551 :                     ; error trap
+     207/    2551 :                     ; small memory buffer - have not researched what this is or does. ;)
+     208/    2551 :                     ; meant to simply populate the memory map with a clean set of NOPS
+     209/    2551 :                     
+     210/    2551 :                     	ds	100o
+     211/    2651 :                     
+     212/    2651 :                     trapped:
+     213/    2651 : 303 271 005         	JMP	err_hi
+     214/    2654 :                     
+     215/    2654 :                     waiting:
+     216/    2654 : 036 000             	MVI E,	000o
+     217/    2656 : 026 150             	MVI D,	150o
+     218/    2660 :                     reentry:
+     219/    2660 : 035                 	DCR E
+     220/    2661 : 302 260 005         	JNZ reentry
+     221/    2664 : 025                 	DCR D
+     222/    2665 : 302 260 005         	JNZ reentry
+     223/    2670 : 311                 	RET
+     224/    2671 :                     
+     225/    2671 :                     err_hi:
+     226/    2671 : 000                 	NOP
+     227/    2672 : 000                 	NOP
+ AS V1.42 Beta [Bld 222] - Source File tib_ff.asm - Page 5 - 06/21/2022 12:50:50 PM
+
+
+     228/    2673 :                     hold:
+     229/    2673 : 000                 	NOP
+     230/    2674 : 000                 	NOP
+     231/    2675 :                     
+     232/    2675 : 072 144 006         	LDA	BYHD	; 040o
+     233/    2700 : 323 001             	OUT	001
+     234/    2702 :                     
+     235/    2702 : 072 144 006         	LDA	BYHD
+     236/    2705 : 323 001             	OUT	001
+     237/    2707 :                     
+     238/    2707 : 072 141 006         	LDA	BYHA	; 105o 'E'
+     239/    2712 : 323 001             	OUT	001
+     240/    2714 :                     
+     241/    2714 : 072 142 006         	LDA	BYHB    ; 162o 'r'
+     242/    2717 : 323 001             	OUT	001
+     243/    2721 :                     
+     244/    2721 : 072 142 006         	LDA	BYHB
+     245/    2724 : 323 001             	OUT	001
+     246/    2726 :                     
+     247/    2726 : 072 143 006         	LDA	BYHC	; 157o 'o'
+     248/    2731 : 323 001             	OUT	001
+     249/    2733 :                     
+     250/    2733 : 072 142 006         	LDA	BYHB    ; 'Error' to here
+     251/    2736 : 323 001             	OUT	001
+     252/    2740 :                     
+     253/    2740 : 072 144 006         	LDA	BYHD
+     254/    2743 : 323 001             	OUT	001
+     255/    2745 :                     
+     256/    2745 :                     
+     257/    2745 : 072 145 006         	LDA	BYHE	; '-'
+     258/    2750 : 323 001             	OUT	001
+     259/    2752 :                     
+     260/    2752 : 072 144 006         	LDA	BYHD
+     261/    2755 : 323 001             	OUT	001
+     262/    2757 :                     
+     263/    2757 : 072 146 006         	LDA	BYHF	; 'H'
+     264/    2762 : 323 001             	OUT	001
+     265/    2764 :                     
+     266/    2764 : 072 147 006         	LDA	BYHG	; 'I'
+     267/    2767 : 323 001             	OUT	001
+     268/    2771 :                     
+     269/    2771 : 072 150 006         	LDA	BYHH	; 'G'
+     270/    2774 : 323 001             	OUT	001
+     271/    2776 :                     
+     272/    2776 : 072 146 006         	LDA	BYHF	; 'H'
+     273/    3001 : 323 001             	OUT	001
+     274/    3003 :                     
+     275/    3003 : 072 144 006         	LDA	BYHD    ; ' '
+     276/    3006 : 323 001             	OUT	001
+     277/    3010 :                     
+     278/    3010 : 072 151 006         	LDA	BYHI    ; 'T'
+     279/    3013 : 323 001             	OUT	001
+     280/    3015 :                     
+     281/    3015 : 072 152 006         	LDA	BYHJ    ; 'R'
+     282/    3020 : 323 001             	OUT	001
+     283/    3022 :                     
+     284/    3022 : 072 153 006         	LDA	BYHK    ; 'A'
+     285/    3025 : 323 001             	OUT	001
+     286/    3027 :                     
+     287/    3027 : 072 154 006         	LDA	BYHL    ; 'P'
+ AS V1.42 Beta [Bld 222] - Source File tib_ff.asm - Page 6 - 06/21/2022 12:50:50 PM
+
+
+     288/    3032 : 323 001             	OUT	001
+     289/    3034 :                     
+     290/    3034 : 072 144 006         	LDA	BYHD    ; ' '
+     291/    3037 : 323 001             	OUT	001
+     292/    3041 :                     
+     293/    3041 : 072 144 006         	LDA	BYHD    ; ' '
+     294/    3044 : 323 001             	OUT	001
+     295/    3046 :                     
+     296/    3046 : 000                 	NOP
+     297/    3047 : 000                 	NOP
+     298/    3050 : 000                 	NOP
+     299/    3051 : 000                 	NOP
+     300/    3052 :                     
+     301/    3052 : 315 254 005         	CALL	waiting ; finite delay added here
+     302/    3055 : 315 254 005         	CALL	waiting
+     303/    3060 : 315 254 005         	CALL	waiting
+     304/    3063 : 315 254 005         	CALL	waiting
+     305/    3066 : 315 254 005         	CALL	waiting
+     306/    3071 : 315 254 005         	CALL	waiting
+     307/    3074 : 315 254 005         	CALL	waiting
+     308/    3077 : 315 254 005         	CALL	waiting
+     309/    3102 : 315 254 005         	CALL	waiting
+     310/    3105 : 315 254 005         	CALL	waiting
+     311/    3110 : 315 254 005         	CALL	waiting
+     312/    3113 : 315 254 005         	CALL	waiting
+     313/    3116 : 315 254 005         	CALL	waiting
+     314/    3121 : 315 254 005         	CALL	waiting
+     315/    3124 : 315 254 005         	CALL	waiting
+     316/    3127 : 315 254 005         	CALL	waiting
+     317/    3132 : 315 254 005         	CALL	waiting
+     318/    3135 : 303 273 005         	JMP	hold
+     319/    3140 : 000                 	NOP
+     320/    3141 :                     
+     321/    3141 : 105                 BYHA:	DB	105o ; 'E'
+     322/    3142 : 162                 BYHB:	DB	162o ; 'r'
+     323/    3143 : 157                 BYHC:	DB	157o ; 'o'
+     324/    3144 : 040                 BYHD:	DB	040o ; ' '
+     325/    3145 : 055                 BYHE:	DB	055o ; '-'
+     326/    3146 : 110                 BYHF:	DB	110o ; 'H'
+     327/    3147 : 111                 BYHG:	DB	111o ; 'I'
+     328/    3150 : 107                 BYHH:	DB	107o ; 'G'
+     329/    3151 : 124                 BYHI:	DB	124o ; 'T'
+     330/    3152 : 122                 BYHJ:	DB	122o ; 'R'
+     331/    3153 : 101                 BYHK:	DB	101o ; 'A'
+     332/    3154 : 120                 BYHL:   DB	120o ; 'P'
+     333/    3155 :                     
+     334/    3155 :                     
+     335/    3155 :                     ; ------------------  stack  --------------
+     336/    3155 :                     STACK: 
+     337/    3155 : 000                 	DB	0
+     338/    3156 :                     	END
+ AS V1.42 Beta [Bld 222] - Source File tib_ff.asm - Page 7 - 06/21/2022 12:50:50 PM
+
+
+  Symbol Table (* = unused):
+  --------------------------
+
+*ARCHITECTURE :                                      "x86_64-unknown-linux" - |
+*BYAA :                        2023 C | *BYAB :                        2024 C |
+*BYAC :                        2025 C | *BYAD :                        2026 C |
+ BYHA :                        3141 C |  BYHB :                        3142 C |
+ BYHC :                        3143 C |  BYHD :                        3144 C |
+ BYHE :                        3145 C |  BYHF :                        3146 C |
+ BYHG :                        3147 C |  BYHH :                        3150 C |
+ BYHI :                        3151 C |  BYHJ :                        3152 C |
+ BYHK :                        3153 C |  BYHL :                        3154 C |
+*CASESENSITIVE :                  0 - |  CLD :                         2157 C |
+ CLRS :                        2361 C |  CNVSN :                       2466 C |
+ CNVSN.LOOP :                  2467 C | *COMPMODE :                       0 - |
+*CONSTPI :        3.141592653589793 - |  CUUP :                        2406 C |
+*DATE :                "06/21/2022" - |  ERR_HI :                      2671 C |
+ ESCAPE :                      2165 C | *FALSE :                          0 - |
+*FOUND :                       2461 C | *HAS64 :                          1 - |
+ HOLD :                        2673 C | *IDEN :                        2003 C |
+ KEY :                         2452 C |  LDELY :                       2220 C |
+*LISTON :                         1 - |  LTRA :                        2201 C |
+ LTRJ :                        2202 C | *MACEXP :                         7 - |
+ MDELY :                       2506 C |  MESSG :                       2520 C |
+*MESSG.COUNTER :               2531 C | *MESSG.END_MESSG :             2550 C |
+*MESSG.POP_REGS :              2545 C | *MESSG.PUSH_REGS :             2523 C |
+ MESSG.PUTCH :                 2535 C | *MESSG.STRING_ADDRS :          2526 C |
+*MOMCPU :                    100200 - | *MOMCPUNAME :                "8080" - |
+*NBR0 :                        2167 C | *NBR1 :                        2170 C |
+ NBR2 :                        2171 C | *NBR3 :                        2172 C |
+*NBR4 :                        2173 C | *NBR5 :                        2174 C |
+*NBR6 :                        2175 C | *NBR7 :                        2176 C |
+ NBR8 :                        2177 C | *NBR9 :                        2200 C |
+*NESTMAX :                      400 - |  REENT :                       2207 C |
+ REENTRY :                     2660 C | *RELAXED :                        0 - |
+ RUN :                         2475 C |  SQBKT :                       2166 C |
+ STACK :                       3155 C | *START :                       2000 C |
+ TIB :                         2027 C | *TIME :               "12:50:50 PM" - |
+*TRAPPED :                     2651 C |  TRMSET :                      2440 C |
+*TRUE :                           1 - | *VERSION :                    12057 - |
+ WAIT :                        2203 C |  WAITING :                     2654 C |
+*Z80SYNTAX :                      0 - |
+
+     76 symbols
+     38 unused symbols
+
+ AS V1.42 Beta [Bld 222] - Source File tib_ff.asm - Page 8 - 06/21/2022 12:50:50 PM
+
+
+  Code Pages:
+  ----------
+
+STANDARD (0 changed characters)
+
+1 code page
+
+0.00 seconds assembly time
+
+    341 lines source file
+      2 passes
+      0 errors
+      0 warnings
