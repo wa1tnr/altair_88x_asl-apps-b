@@ -17,14 +17,14 @@ TIB:
 
 ; message
 
-; $  odd 'Tue 21 Jun 11:06:28 UTC 2022 '
+; $  odd 'Tue 21 Jun 12:26:53 UTC 2022 '
 	db	124o, 165o, 145o, 040o,   062o, 061o, 040o, 112o
-	db	165o, 156o, 040o, 061o,   061o, 072o, 060o, 066o
-	db	072o, 062o, 070o, 040o,   125o, 124o, 103o, 040o
+	db	165o, 156o, 040o, 061o,   062o, 072o, 062o, 066o
+	db	072o, 065o, 063o, 040o,   125o, 124o, 103o, 040o
 	db	062o, 060o, 062o, 062o,   040o
 
-; $  odd 'r00-cc- '
-	db	162o, 060o, 060o, 055o,   143o, 143o, 055o, 040o
+; $  odd 'r00-dd- '
+	db	162o, 060o, 060o, 055o,   144o, 144o, 055o, 040o
 
 ; $  odd 'now displaying TIB contents on boot after CLRS! '
 	db	156o, 157o, 167o
@@ -35,7 +35,7 @@ TIB:
 	db	040o, 141o, 146o, 164o,   145o, 162o, 040o, 103o
 	db	114o, 122o, 123o, 041o,   040o, 040o, 040o, 040o
 
-CLD:	LXI SP,	STACK+200Q
+CLD:	LXI SP,	STACK+400Q ; 200Q was working previously
 ;	JMP trapped
 ;	JMP run
 	JMP run
@@ -153,6 +153,7 @@ CNVSN:	NOP
 
 run:
 ;	CALL	TRMSET
+	CALL	TRMSET
 	CALL	MESSG ; type up to 79 chars to the terminal, stored in TIB
 	JMP	CNVSN
 
@@ -167,33 +168,45 @@ MESSG:	CALL	MDELY
 
 ; ###bookmark
 
+.push_regs:
 	PUSH B
 	PUSH D
 	PUSH H
 
+.string_addrs
 	LXI H,	TIB ; address of string base
 
-	; counter:
-	MVI E,	110o ; lo  ; length of string to display
+.counter:
+	; string length is near 125o - manually determined
+	MVI E,	125o ; lo  ; length of string to display
 	MVI D,	000o ; hi
 
 ; type the string to the console
-.reent:
+.putch:
 	DCR E
 	MOV A, M ; copy the memory contents pointed to by HL into A
 	OUT	001
 	INX	H
-	JNZ .reent
+	JNZ .putch
 
-;	LDA	TIB+116o
-;	OUT	001
+.pop_regs:
         POP	H
         POP	D
         POP	B
 
+.end_MESSG:
 	RET
 
+
+; ---------   error trap   ----------
+; nothing calls this; it's meant for situations where
+; NOP was followed past a boundary, to notify operator
+; that an invalid execution path has begun.
+
 ; error trap
+; small memory buffer - have not researched what this is or does. ;)
+; meant to simply populate the memory map with a clean set of NOPS
+
 	ds	100o
 
 trapped:
