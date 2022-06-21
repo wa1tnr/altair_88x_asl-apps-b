@@ -169,8 +169,9 @@ MESSG:	CALL	MDELY
 
 	PUSH B
 	PUSH D
+	PUSH H
 
-	LXI B,	TIB ; address of string base
+	LXI H,	TIB ; address of string base
 
 	; counter:
 	MVI E,	110o ; lo  ; length of string to display
@@ -179,13 +180,14 @@ MESSG:	CALL	MDELY
 ; type the string to the console
 .reent:
 	DCR E
-	MOV A, B
+	MOV A, M ; copy the memory contents pointed to by HL into A
 	OUT	001
-	INR	B
+	INX	H
 	JNZ .reent
 
 ;	LDA	TIB+116o
 ;	OUT	001
+        POP	H
         POP	D
         POP	B
 
