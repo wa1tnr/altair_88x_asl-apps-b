@@ -1,4 +1,5 @@
 ; keyboard echo w/boilerplate
+; Wed 22 Jun 16:43:57 UTC 2022
 
 	ORG	2000o
 START:	JMP	CLD
@@ -17,16 +18,16 @@ TIB:
 
 ; message
 
-; $  odd 'Tue 21 Jun 12:26:53 UTC 2022 '
-	db	124o, 165o, 145o, 040o,   062o, 061o, 040o, 112o
-	db	165o, 156o, 040o, 061o,   062o, 072o, 062o, 066o
-	db	072o, 065o, 063o, 040o,   125o, 124o, 103o, 040o
+; $ odd 'Wed 22 Jun 17:15:02 UTC 2022'
+	db	127o, 145o, 144o, 040o,   062o, 062o, 040o, 112o
+	db	165o, 156o, 040o, 061o,   067o, 072o, 061o, 065o
+	db	072o, 060o, 062o, 040o,   125o, 124o, 103o, 040o
 	db	062o, 060o, 062o, 062o,   040o
 
-; $  odd 'r00-dd- '
-	db	162o, 060o, 060o, 055o,   144o, 144o, 055o, 040o
+; $  odd 'r00-ee- '
+	db	162o, 060o, 060o, 055o,   145o, 145o, 055o, 040o
 
-; $  odd 'now displaying TIB contents on boot after CLRS! '
+; $  odd 'now displaying TIB contents on boot after CLRS!'
 	db	156o, 157o, 167o
 	db	040o, 144o, 151o, 163o,   160o, 154o, 141o, 171o
 	db	151o, 156o, 147o, 040o,   124o, 111o, 102o, 040o
@@ -140,6 +141,13 @@ TRMSET:	CALL	LDELY
 KEY:	IN	000
 	ANI	001
 	JNZ	KEY
+
+	NOP
+	NOP
+
+	NOP
+	NOP
+	NOP
 
 FOUND:	IN	001
 	OUT	001
