@@ -2,7 +2,7 @@
 # Altair-Duino 8800b
 # Intel 8080 Assembly Language programming
 
-# Sat 11 Jun 03:46:35 UTC 2022
+# Thu 04 Aug 02:03:42 UTC 2022
 
 # change this line to your current project's root name for the .asm file
 
@@ -10,9 +10,7 @@ THIS=tib_ff
 
 all:	clean hexfile binfile
 
-# ./asl -a -cpu 8080 -L -listradix 8 $(THIS).asm
-
-$(THIS).p:	./asl $(THIS).asm
+$(THIS).p:	asl $(THIS).asm
 	@./asl -P -a -cpu 8080 -L -listradix 8 $(THIS).asm
 	@od -b -An $(THIS).p > $(THIS).p.dump
 
