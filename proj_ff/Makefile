@@ -45,7 +45,10 @@ compiler:
 
 asl:	compiler
 
-clean:
+gitrestore:
+	@git restore -- _asl _p2bin _p2hex
+
+clean:	gitrestore
 	@rm -f $(THIS).inc
 	@rm -f $(THIS).lst
 
