@@ -18,23 +18,27 @@ TIB:
 
 ; message
 
-; $ odd 'Wed 22 Jun 17:15:02 UTC 2022'
-	db	127o, 145o, 144o, 040o,   062o, 062o, 040o, 112o
-	db	165o, 156o, 040o, 061o,   067o, 072o, 061o, 065o
-	db	072o, 060o, 062o, 040o,   125o, 124o, 103o, 040o
+; $  odd 'Sat  9 Jul 02:58:15 UTC 2022'
+
+;    :map v hao,^[nn  ; rvim macro
+
+	db	123o, 141o, 164o, 040o,   040o, 071o, 040o, 112o
+	db	165o, 154o, 040o, 060o,   062o, 072o, 065o, 070o
+	db	072o, 061o, 065o, 040o,   125o, 124o, 103o, 040o
 	db	062o, 060o, 062o, 062o,   040o
 
-; $  odd 'r00-ee- '
-	db	162o, 060o, 060o, 055o,   145o, 145o, 055o, 040o
+; $  odd 'with webserial exp in mind '
+	db	167o, 151o, 164o
+	db	150o, 040o, 167o, 145o,   142o, 163o, 145o, 162o
+	db	151o, 141o, 154o, 040o,   145o, 170o, 160o, 040o
+	db	151o, 156o, 040o, 155o,   151o, 156o, 144o, 040o
 
-; $  odd 'now displaying TIB contents on boot after CLRS!'
-	db	156o, 157o, 167o
-	db	040o, 144o, 151o, 163o,   160o, 154o, 141o, 171o
-	db	151o, 156o, 147o, 040o,   124o, 111o, 102o, 040o
-	db	143o, 157o, 156o, 164o,   145o, 156o, 164o, 163o
-	db	040o, 157o, 156o, 040o,   142o, 157o, 157o, 164o
-	db	040o, 141o, 146o, 164o,   145o, 162o, 040o, 103o
-	db	114o, 122o, 123o, 041o,   040o, 040o, 040o, 040o
+; $  odd 'r00-ff- '
+	db	162o, 060o, 060o, 055o,   146o, 146o, 055o, 040o
+
+	db	015o, 012o ; 0x0d 0x0a
+	db	015o, 012o ; official end of message
+	db	146o, 146o ; spares
 
 CLD:	LXI SP,	STACK+400Q ; 200Q was working previously
 ;	JMP trapped
@@ -160,7 +164,6 @@ CNVSN:	NOP
 	JMP	.loop
 
 run:
-;	CALL	TRMSET
 	CALL	TRMSET
 	CALL	MESSG ; type up to 79 chars to the terminal, stored in TIB
 	JMP	CNVSN
@@ -186,7 +189,10 @@ MESSG:	CALL	MDELY
 
 .counter:
 	; string length is near 125o - manually determined
-	MVI E,	125o ; lo  ; length of string to display
+	; IMPORTANT KLUDGE STRING LENGTH HERE ##book
+	; MVI E,	103o ; lo  ; length of string to display
+	; 75: first 'f' prints .. MVI E,	75o ; lo  ; length of string to display
+	MVI E,	104o ; lo  ; length of string to display
 	MVI D,	000o ; hi
 
 ; type the string to the console
