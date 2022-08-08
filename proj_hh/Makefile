@@ -57,4 +57,9 @@ clean:	gitrestore
 	@rm -f $(THIS).bin.dump
 	@rm -f $(THIS).i
 
+distclean:	clean
+	@rm asl
+	@rm p2bin
+	@rm p2hex
+
 # END.
