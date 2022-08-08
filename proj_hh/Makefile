@@ -6,7 +6,7 @@
 
 # change this line to your current project's root name for the .asm file
 
-THIS=tib_ff
+THIS=tib_hh
 
 all:	clean hexfile binfile
 
